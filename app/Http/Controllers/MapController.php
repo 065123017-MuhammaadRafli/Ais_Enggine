@@ -14,8 +14,11 @@ class MapController extends Controller
 
     public function getLiveShips()
     {
-        // Gunakan table() bukan collection()
-        $data = DB::connection('mongodb')->table('data_uji_kapal')->get();
+        // Gunakan table() bukan collection() dan tambahkan orderBy agar urut
+        $data = DB::connection('mongodb')
+                    ->table('data_uji_kapal')
+                    ->orderBy('id', 'asc')
+                    ->get();
 
         return response()->json($data);
     }
