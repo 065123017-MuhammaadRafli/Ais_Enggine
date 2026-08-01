@@ -1,0 +1,19 @@
+src/libmongocrypt/kms-message/src/kms_crypto_apple.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/kms-message/src/kms_crypto_apple.c \
+  src/libmongocrypt/kms-message/src/kms_crypto.h \
+  src/libmongocrypt/kms-message/src/kms_message_private.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_message.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_message_defines.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_kmip_request.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_request.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_request_opt.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_kmip_response.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_response.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_kmip_response_parser.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_response_parser.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_caller_identity_request.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_decrypt_request.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_encrypt_request.h \
+  src/libmongocrypt/kms-message/src/kms_request_str.h \
+  src/libmongocrypt/kms-message/src/kms_kv_list.h \
+  src/libmongocrypt/kms-message/src/kms_kmip_response_parser_private.h

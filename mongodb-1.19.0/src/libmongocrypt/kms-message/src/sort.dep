@@ -1,0 +1,2 @@
+src/libmongocrypt/kms-message/src/sort.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/kms-message/src/sort.c

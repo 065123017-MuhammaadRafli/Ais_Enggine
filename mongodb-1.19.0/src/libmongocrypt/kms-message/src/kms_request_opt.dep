@@ -1,0 +1,6 @@
+src/libmongocrypt/kms-message/src/kms_request_opt.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/kms-message/src/kms_request_opt.c \
+  src/libmongocrypt/kms-message/src/kms_request_opt_private.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_message_defines.h \
+  src/libmongocrypt/kms-message/src/kms_message/kms_request_opt.h \
+  src/libmongocrypt/kms-message/src/kms_crypto.h

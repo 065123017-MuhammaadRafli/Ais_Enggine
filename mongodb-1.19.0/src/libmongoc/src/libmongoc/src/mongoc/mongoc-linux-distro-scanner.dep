@@ -1,0 +1,4 @@
+src/libmongoc/src/libmongoc/src/mongoc/mongoc-linux-distro-scanner.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libmongoc/src/mongoc/mongoc-linux-distro-scanner.c \
+  src/libmongoc/src/libmongoc/src/mongoc/mongoc-handshake-os-private.h \
+  src/libmongoc/src/libmongoc/src/mongoc/mongoc-prelude.h

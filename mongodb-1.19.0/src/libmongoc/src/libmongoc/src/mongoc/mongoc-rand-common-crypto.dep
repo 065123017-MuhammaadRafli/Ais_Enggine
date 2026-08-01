@@ -1,0 +1,3 @@
+src/libmongoc/src/libmongoc/src/mongoc/mongoc-rand-common-crypto.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libmongoc/src/mongoc/mongoc-rand-common-crypto.c \
+  src/libmongoc/src/libmongoc/src/mongoc/mongoc-config.h

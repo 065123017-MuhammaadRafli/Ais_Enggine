@@ -1,0 +1,3 @@
+src/libmongoc/src/libmongoc/src/mongoc/mongoc-stream-tls-secure-channel.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libmongoc/src/mongoc/mongoc-stream-tls-secure-channel.c \
+  src/libmongoc/src/libmongoc/src/mongoc/mongoc-config.h

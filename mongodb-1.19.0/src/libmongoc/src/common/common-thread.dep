@@ -1,0 +1,10 @@
+src/libmongoc/src/common/common-thread.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/common/common-thread.c \
+  src/libmongoc/src/common/common-thread-private.h \
+  src/libmongoc/src/common/common-prelude.h \
+  src/libmongoc/src/common/common-config.h \
+  src/libmongoc/src/common/common-macros-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-compat.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-prelude.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-config.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-macros.h

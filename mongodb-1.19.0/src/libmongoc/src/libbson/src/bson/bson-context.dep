@@ -1,0 +1,17 @@
+src/libmongoc/src/libbson/src/bson/bson-context.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-context.c \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-compat.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-prelude.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-config.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-macros.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-atomic.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-clock.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-types.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-endian.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-context.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-context-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/common/common-thread-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/common/common-prelude.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/common/common-config.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/common/common-macros-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-memory.h

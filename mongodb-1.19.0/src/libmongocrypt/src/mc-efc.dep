@@ -1,0 +1,56 @@
+src/libmongocrypt/src/mc-efc.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mc-efc.c \
+  src/libmongocrypt/src/mc-efc-private.h \
+  src/libmongocrypt/src/mongocrypt-buffer-private.h \
+  src/libmongocrypt/src/mongocrypt-binary-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-compat.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-prelude.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-config.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-macros.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-atomic.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-cmp.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-context.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-types.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-endian.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-clock.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-decimal128.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-error.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-iter.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-json.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-keys.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-md5.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-memory.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-oid.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-reader.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-string.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-utf8.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-value.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-version.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-version-functions.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-writer.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bcon.h \
+  src/libmongocrypt/src/mongocrypt.h \
+  src/libmongocrypt/src/mongocrypt-compat.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt-compat/mongocrypt-export.h \
+  src/libmongocrypt/src/mongocrypt-config.h \
+  src/libmongocrypt/src/mlib/str.h src/libmongocrypt/src/mlib/./macros.h \
+  src/libmongocrypt/src/mlib/./user-check.h \
+  src/libmongocrypt/src/mongocrypt-private.h \
+  src/libmongocrypt/src/mongocrypt-cache-key-private.h \
+  src/libmongocrypt/src/mongocrypt-cache-private.h \
+  src/libmongocrypt/src/mongocrypt-mutex-private.h \
+  src/libmongocrypt/src/mongocrypt-status-private.h \
+  src/libmongocrypt/src/mongocrypt-key-private.h \
+  src/libmongocrypt/src/mongocrypt-kek-private.h \
+  src/libmongocrypt/src/mongocrypt-endpoint-private.h \
+  src/libmongocrypt/src/mongocrypt-opts-private.h \
+  src/libmongocrypt/src/mongocrypt-log-private.h \
+  src/libmongocrypt/src/mc-array-private.h \
+  src/libmongocrypt/src/mongocrypt-cache-oauth-private.h \
+  src/libmongocrypt/src/mongocrypt-crypto-private.h \
+  src/libmongocrypt/src/mongocrypt-dll-private.h \
+  src/libmongocrypt/src/mlib/error.h src/libmongocrypt/src/mlib/./str.h \
+  src/libmongocrypt/src/mongo_crypt-v1.h \
+  src/libmongocrypt/src/mlib/macros.h \
+  src/libmongocrypt/src/mongocrypt-util-private.h

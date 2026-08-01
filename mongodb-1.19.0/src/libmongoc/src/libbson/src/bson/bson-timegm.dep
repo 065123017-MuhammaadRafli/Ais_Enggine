@@ -1,0 +1,7 @@
+src/libmongoc/src/libbson/src/bson/bson-timegm.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-timegm.c \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-compat.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-prelude.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-config.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-macros.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libbson/src/bson/bson-timegm-private.h

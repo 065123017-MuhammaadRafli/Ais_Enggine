@@ -1,0 +1,4 @@
+src/libmongoc/src/utf8proc-2.8.0/utf8proc.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/utf8proc-2.8.0/utf8proc.c \
+  src/libmongoc/src/utf8proc-2.8.0/utf8proc.h \
+  src/libmongoc/src/utf8proc-2.8.0/utf8proc_data.c

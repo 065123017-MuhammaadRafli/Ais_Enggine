@@ -1,0 +1,3 @@
+src/libmongoc/src/libmongoc/src/mongoc/mongoc-libressl.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongoc/src/libmongoc/src/mongoc/mongoc-libressl.c \
+  src/libmongoc/src/libmongoc/src/mongoc/mongoc-config.h

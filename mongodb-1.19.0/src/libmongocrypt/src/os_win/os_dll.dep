@@ -1,0 +1,8 @@
+src/libmongocrypt/src/os_win/os_dll.lo: \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/os_win/os_dll.c \
+  src/libmongocrypt/src/os_win/../mongocrypt-dll-private.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mlib/error.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mlib/./user-check.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mlib/./str.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mlib/./macros.h \
+  /Applications/MAMP/htdocs/ais-magang-dashboard/mongodb-1.19.0/src/libmongocrypt/src/mlib/str.h
