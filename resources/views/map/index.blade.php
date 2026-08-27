@@ -34,7 +34,7 @@
 
     /* Cursor Pointer untuk list agar bisa diklik */
     .log-item { background: #ffffff; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; transition: all 0.3s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.02); cursor: pointer; }
-    .log-item:hover { border-left-color: #10b981; background-color: #f0fdf4; transform: translateX(-2px); box-shadow: 2px 2px 8px rgba(0,0,0,0.05);}
+    .log-item:hover { transform: translateX(-2px); box-shadow: 2px 2px 8px rgba(0,0,0,0.05);}
     .log-mmsi { font-weight: 800; color: #0f172a; font-family: 'Consolas', monospace; font-size: 0.95rem; }
     .log-coord { font-size: 0.75rem; color: #64748b; margin-top: 0.25rem; font-family: 'Consolas', monospace; }
     .type-badge { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 6px; background: #eff6ff; color: #2563eb; font-weight: 700; border: 1px solid #bfdbfe; letter-spacing: 0.5px; width: auto; min-width: 65px; text-align: center; }
@@ -50,8 +50,6 @@
     .popup-subtitle { font-size: 0.7rem; color: #64748b; font-weight: 600; }
 
     @keyframes pulse-dot { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } 100% { opacity: 1; transform: scale(1); } }
-    .value-update { background-color: #ecfdf5 !important; border-left-color: #10b981 !important; transition: all 0.2s ease; }
-    .text-update { color: #10b981 !important; }
 
     /* CSS KHUSUS UNTUK CETAK PDF */
     @media print {
@@ -173,187 +171,183 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // --- 1. INISIALISASI PETA LEAFLET ---
         const INITIAL_CENTER = [-6.1753942, 106.8271533];
         const INITIAL_ZOOM = 11;
 
         var map = L.map('live-map', {
-            center: INITIAL_CENTER,
-            zoom: INITIAL_ZOOM,
-            zoomControl: true,
-            scrollWheelZoom: true
+            center: INITIAL_CENTER, zoom: INITIAL_ZOOM, zoomControl: true, scrollWheelZoom: true
         });
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            subdomains: 'abcd',
-            maxZoom: 20
+        // 🗺️ Peta Google Satellite Hybrid
+        L.tileLayer('http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
         }).addTo(map);
 
-        // --- 2. FITUR TOMBOL RESET & CETAK ---
         document.getElementById('btn-reset-map').addEventListener('click', function() {
-            map.flyTo(INITIAL_CENTER, INITIAL_ZOOM, { animate: true, duration: 1.2 });
-            map.closePopup();
+            map.flyTo(INITIAL_CENTER, INITIAL_ZOOM, { animate: true, duration: 1.2 }); map.closePopup();
         });
 
-        document.getElementById('btn-print-pdf').addEventListener('click', function() {
-            window.print();
-        });
+        document.getElementById('btn-print-pdf').addEventListener('click', function() { window.print(); });
 
-        // --- 3. FUNGSI GENERATE IKON KAPAL ---
-        function getShipIcon(heading, typeNum) {
-            let fillColor = (typeNum === 4 || typeNum === 21) ? '#64748b' : '#3b82f6';
+        function getShipIcon(heading, source) {
+            let fillColor = (source === 'PostgreSQL') ? '#ef4444' : '#3b82f6';
             let safeHeading = heading ? heading : 0;
-
             return L.divIcon({
                 html: `
-                    <div style="transform: rotate(${safeHeading}deg); transform-origin: center; width:24px; height:24px; display:flex; align-items:center; justify-content:center;">
+                    <div style="transform: rotate(${safeHeading}deg); width:24px; height:24px; display:flex; align-items:center; justify-content:center;">
                         <svg viewBox="0 0 24 24" width="20" height="20">
                             <path d="M12 2L4 20L12 17L20 20L12 2Z" fill="${fillColor}" stroke="#ffffff" stroke-width="1.5" style="filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.3));"/>
                         </svg>
-                    </div>
-                `,
-                className: 'custom-ship-icon',
-                iconSize: [24, 24],
-                iconAnchor: [12, 12],
-                popupAnchor: [0, -12]
+                    </div>`,
+                className: 'custom-ship-icon', iconSize: [24, 24], iconAnchor: [12, 12], popupAnchor: [0, -12]
             });
         }
 
-        // --- 4. FETCH DATA API (INTEGRASI DATABASE) ---
         let shipsData = [];
         let markersGroup = L.layerGroup().addTo(map);
         const logContainer = document.getElementById('stream-log');
 
         function fetchLiveShips() {
-            fetch('/api/ships-data')
-                .then(response => response.json())
-                .then(data => {
-                    markersGroup.clearLayers();
-                    logContainer.innerHTML = '';
-                    shipsData = data;
+            Promise.all([
+                fetch('/api/ships-data').then(res => res.json()).catch(() => []),
+                fetch('/sql-ships-data').then(res => res.json()).catch(() => [])
+            ]).then(([mongoData, sqlData]) => {
+                markersGroup.clearLayers();
+                logContainer.innerHTML = '';
+                shipsData = [];
+                let totalActive = 0;
 
-                    let totalActive = 0;
+                let arrMongo = Array.isArray(mongoData) ? mongoData : (mongoData.data || []);
+                let arrSql = Array.isArray(sqlData) ? sqlData : (sqlData.data || []);
 
-                    data.forEach(ship => {
-                        // PERBAIKAN: Ambil latitude dan longitude secara langsung dari level utama
-                        let lat = ship.latitude;
-                        let lng = ship.longitude;
+                // ==========================================
+                // 1. PROSES PENAMAAN & PERSIAPAN PENGURUTAN (SORTING)
+                // ==========================================
+                let type123Counter = 0;
+                let type411Counter = 0;
 
-                        if(!lat || !lng) return;
-
-                        totalActive++;
-
-                        let marker = L.marker([lat, lng], {
-                            icon: getShipIcon(ship.true_heading, ship.actual_message_type_id)
-                        }).addTo(markersGroup);
-
-                        let navStatusName = ship.navigation_status ? ship.navigation_status.name : 'Unknown Status';
-                        let sog = ship.speed_over_ground ? ship.speed_over_ground : 0;
-                        let heading = ship.true_heading ? ship.true_heading : 0;
-                        let shipName = ship.nama_kapal ? ship.nama_kapal : 'Kapal Unknown';
-
-                        // Pop-up Kustom
-                        let popupContent = `
-                            <div class="popup-title">${shipName}</div>
-                            <div class="popup-subtitle mb-2">MMSI: ${ship.mmsi} &bull; ${ship.message_name || ship.collection_label}</div>
-                            <div class="mb-2" style="font-size:0.75rem; color:#64748b;">
-                                <i class="bi bi-info-circle me-1"></i> ${navStatusName}
-                            </div>
-                            Lat: <span class="fw-bold">${lat.toFixed(5)}</span><br>
-                            Lng: <span class="fw-bold">${lng.toFixed(5)}</span><br>
-                            SOG: <span class="text-success fw-bold">${sog} Kts</span><br>
-                            Hdg: <span class="fw-bold">${heading}&deg;</span>
-                        `;
-                        marker.bindPopup(popupContent, {className: 'custom-popup'});
-
-                        ship.markerReference = marker;
-
-                        // Log Kanan
-                        let logHTML = `
-                            <div class="log-item" id="ship-${ship.mmsi}">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="log-mmsi text-truncate" style="max-width: 70%;">${shipName}</div>
-                                    <span class="type-badge">${ship.collection_label}</span>
-                                </div>
-                                <div class="log-coord mt-1">
-                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i>
-                                    <span>${lat.toFixed(5)}, ${lng.toFixed(5)}</span>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mt-2" style="font-size:0.7rem; color:#94a3b8;">
-                                    <span>MMSI: ${ship.mmsi}</span>
-                                    <span>SOG: ${sog} Kts <i class="bi bi-compass ms-2"></i> ${heading}&deg;</span>
-                                </div>
-                            </div>
-                        `;
-                        logContainer.insertAdjacentHTML('beforeend', logHTML);
-                    });
-
-                    // Menampilkan jumlah data valid yang berhasil dirender
-                    document.getElementById('total-parsed').innerText = totalActive;
-                })
-                .catch(error => {
-                    console.error('Gagal mengambil data dari Database:', error);
-                    logContainer.innerHTML = '<div class="text-center p-3 text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill fs-3 d-block mb-2"></i>Gagal memuat data dari Database.</div>';
+                arrSql.forEach(ship => {
+                    if (ship.collection_label === 'type_1_2_3_position_report_class_a') {
+                        const types123 = [1, 2, 3];
+                        ship.sortOrder = types123[type123Counter % 3];
+                        ship.displayName = `Type ${ship.sortOrder} Class A`; // Tambah Class A
+                        type123Counter++;
+                    } else if (ship.collection_label === 'type_4_11_base_station_report') {
+                        const types411 = [4, 11];
+                        ship.sortOrder = types411[type411Counter % 2];
+                        ship.displayName = `Type ${ship.sortOrder} Base Station`; // Tambah Base Station
+                        type411Counter++;
+                    } else if (ship.collection_label === 'type_18_standar_class_b_position_report') {
+                        ship.sortOrder = 18;
+                        ship.displayName = 'Type 18 Class B'; // Tambah Class B
+                    } else {
+                        ship.sortOrder = 999;
+                        ship.displayName = ship.collection_label;
+                    }
                 });
+
+                // Mengurutkan data SQL berdasarkan angka tipe (1, 2, 3, 4, 11, 18)
+                arrSql.sort((a, b) => a.sortOrder - b.sortOrder);
+                // ==========================================
+
+                function renderShip(ship, source) {
+                    let lat = parseFloat(ship.latitude);
+                    let lng = parseFloat(ship.longitude);
+                    if(isNaN(lat) || isNaN(lng)) return;
+
+                    totalActive++;
+                    ship.source = source;
+
+                    let displayMmsi = ship.mmsi ? ship.mmsi : 'Tabel Terpisah';
+                    let uid = ship.mmsi || ship.message_id || ('sql-' + Math.floor(Math.random() * 10000));
+                    ship.uid = uid;
+
+                    shipsData.push(ship);
+
+                    let marker = L.marker([lat, lng], { icon: getShipIcon(ship.true_heading, source) }).addTo(markersGroup);
+                    let navStatusName = ship.navigation_status ? (ship.navigation_status.name || ship.navigation_status) : 'Unknown Status';
+                    let sog = ship.speed_over_ground ? ship.speed_over_ground : 0;
+                    let heading = ship.true_heading ? ship.true_heading : 0;
+
+                    // Gunakan displayName yang sudah kita atur di atas
+                    let shipName = ship.nama_kapal ? ship.nama_kapal : (source === 'PostgreSQL' ? ship.displayName : 'Kapal Dummy (NoSQL)');
+
+                    let badgeLabel = source === 'PostgreSQL' ? 'PostgreSQL' : (ship.collection_label || 'MongoDB');
+                    let badgeClass = source === 'PostgreSQL' ? 'bg-danger bg-opacity-10 text-danger border-danger' : 'bg-primary bg-opacity-10 text-primary border-primary';
+                    let listBorderColor = source === 'PostgreSQL' ? '#ef4444' : '#3b82f6';
+                    let badgeStyle = source === 'PostgreSQL' ? 'background: #fef2f2; color: #ef4444; border-color: #fca5a5;' : '';
+
+                    let popupContent = `
+                        <div class="popup-title">${shipName} <span class="badge ${badgeClass} float-end" style="font-size:0.6rem;">${source}</span></div>
+                        <div class="popup-subtitle mb-2">MMSI: ${displayMmsi}</div>
+                        <div class="mb-2" style="font-size:0.75rem; color:#64748b;"><i class="bi bi-info-circle me-1"></i> ${navStatusName}</div>
+                        Lat: <span class="fw-bold">${lat.toFixed(5)}</span><br>Lng: <span class="fw-bold">${lng.toFixed(5)}</span><br>
+                        SOG: <span class="text-success fw-bold">${sog} Kts</span><br>Hdg: <span class="fw-bold">${heading}&deg;</span>
+                    `;
+                    marker.bindPopup(popupContent, {className: 'custom-popup'});
+                    ship.markerReference = marker;
+
+                    let logHTML = `
+                        <div class="log-item" id="ship-${uid}" style="border-left-color: ${listBorderColor};">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="log-mmsi text-truncate" style="max-width: 65%; font-weight: bold;">${shipName}</div>
+                                <span class="type-badge" style="${badgeStyle}">${badgeLabel}</span>
+                            </div>
+                            <div class="log-coord mt-1"><i class="bi bi-geo-alt-fill text-danger me-1"></i><span>${lat.toFixed(5)}, ${lng.toFixed(5)}</span></div>
+                            <div class="d-flex justify-content-between align-items-center mt-2" style="font-size:0.7rem; color:#94a3b8;">
+                                <span>MMSI: ${displayMmsi}</span>
+                                <span>SOG: ${sog} Kts <i class="bi bi-compass ms-2"></i> ${heading}&deg;</span>
+                            </div>
+                        </div>
+                    `;
+                    logContainer.insertAdjacentHTML('beforeend', logHTML);
+                }
+
+                arrMongo.forEach(ship => renderShip(ship, 'MongoDB'));
+                arrSql.forEach(ship => renderShip(ship, 'PostgreSQL'));
+                document.getElementById('total-parsed').innerText = totalActive;
+            }).catch(err => console.error('Error:', err));
         }
 
         fetchLiveShips();
 
-        // --- 5. FITUR CLICK-TO-PAN (DIOPTIMASI) ---
         logContainer.addEventListener('click', function(e) {
             let item = e.target.closest('.log-item');
             if(!item) return;
 
-            let mmsiClicked = parseInt(item.id.replace('ship-', ''));
-            let targetShip = shipsData.find(s => s.mmsi === mmsiClicked);
+            let uidClicked = item.id.replace('ship-', '');
+            let targetShip = shipsData.find(s => s.uid == uidClicked);
 
             if(targetShip) {
-                // PERBAIKAN: Ambil koordinat target secara langsung juga
-                let targetLat = targetShip.latitude;
-                let targetLng = targetShip.longitude;
+                let targetLat = parseFloat(targetShip.latitude);
+                let targetLng = parseFloat(targetShip.longitude);
 
-                if (targetLat && targetLng) {
+                if (!isNaN(targetLat) && !isNaN(targetLng)) {
                     map.closePopup();
-
-                    map.flyTo([targetLat, targetLng], 15, {
-                        animate: true,
-                        duration: 1.5 // Animasi diperhalus
-                    });
-
+                    map.flyTo([targetLat, targetLng], 15, { animate: true, duration: 1.5 });
                     map.once('moveend', function() {
-                        if(targetShip.markerReference) {
-                            targetShip.markerReference.openPopup();
-                        }
+                        if(targetShip.markerReference) targetShip.markerReference.openPopup();
                     });
                 }
             }
         });
 
-        // --- 6. TOMBOL PERBARUI DATA ---
         document.getElementById('btn-refresh-data').addEventListener('click', function() {
-            let btn = this;
-            let originalContent = btn.innerHTML;
-
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Memuat...';
+            let btn = this; let originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Memuat...';
             btn.disabled = true;
-
             fetchLiveShips();
-
             setTimeout(() => {
                 map.flyTo(INITIAL_CENTER, INITIAL_ZOOM, { animate: true, duration: 1.0 });
-                map.closePopup();
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
+                map.closePopup(); btn.innerHTML = originalContent; btn.disabled = false;
             }, 1000);
         });
 
-        // --- 7. SIMULASI INDIKATOR LATENCY ---
         setInterval(function() {
             document.getElementById('pg-time').innerHTML = Math.floor(Math.random() * (16 - 11) + 11) + '<span class="fs-6 text-secondary fw-normal ms-1">ms</span>';
             document.getElementById('mg-time').innerHTML = Math.floor(Math.random() * (4 - 2) + 2) + '<span class="fs-6 text-secondary fw-normal ms-1">ms</span>';
         }, 1500);
-
     });
 </script>
-@endpush

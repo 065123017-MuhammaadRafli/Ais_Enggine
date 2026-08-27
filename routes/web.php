@@ -13,11 +13,18 @@ use App\Http\Controllers\MapController;
 Route::get('/', function () {
     return redirect('/login');
 });
+Route::get('/tes-rute', function () {
+    return "BERHASIL! Rute baru terbaca oleh Laravel.";
+});
 
 // ========================================================================
 // JALUR API PETA (KITA LETAKKAN DI LUAR AGAR TIDAK DIBLOKIR LOGIN)
 // ========================================================================
+// Jalur MongoDB
 Route::get('/api/ships-data', [MapController::class, 'getLiveShips']);
+
+// Jalur PostgreSQL
+Route::get('/sql-ships-data', [MapController::class, 'getSqlShips']);
 
 // ------------------------------------------------------------------------
 // AUTENTIKASI (GUEST)
