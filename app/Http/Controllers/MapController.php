@@ -17,15 +17,14 @@ class MapController extends Controller
     // ==========================================
     public function getLiveShips()
     {
-        // Mengambil data dari tabel/koleksi data_uji_kapal di MongoDB
+        // Mengambil data dari koleksi data_uji_kapal di MongoDB tanpa orderBy 'id' yang bikin error
         $data = DB::connection('mongodb')
                     ->table('data_uji_kapal')
-                    ->orderBy('id', 'asc')
+                    ->limit(100)
                     ->get();
 
         return response()->json($data);
     }
-
     // ==========================================
     // 2. MENGAMBIL DATA DARI POSTGRESQL (SAFE MULTI-TYPE)
     // ==========================================
